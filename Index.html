@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="pt" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Porto Unico RP | MTA Roleplay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7289DA;
+            --primary-hover: #677BC4;
+            --secondary: #FF73FA;
+            --dark: #1A1D21;
+            --darker: #121416;
+            --light: #F0F2F5;
+            --gray: #8E9297;
+            --success: #3BA55C;
+            --danger: #ED4245;
+            --bronze: #CD7F32;
+            --silver: #C0C0C0;
+            --gold: #FFD700;
+            --platinum: #E5E4E2;
+            
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --blur: blur(10px);
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.7;
+            background-image: 
+                radial-gradient(at 80% 0%, hsla(189, 100%, 56%, 0.1) 0, transparent 50%),
+                radial-gradient(at 0% 50%, hsla(355, 100%, 93%, 0.1) 0, transparent 50%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 1000;
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--light);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(114, 137, 218, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--glass-border);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #2d8c4a;
+            transform: translateY(-2px);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+        }
+        
+        .username {
+            font-weight: 600;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #FFF, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .discord-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .discord-link:hover {
+            color: var(--primary);
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 60%;
+            max-width: 800px;
+            opacity: 0.7;
+            z-index: 1;
+        }
+        
+        /* Features Section */
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            color: var(--gray);
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+            font-size: 1.1rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        /* Pricing Section */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .pricing-card {
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .pricing-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 0 0 0 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .pricing-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .pricing-title {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .pricing-period {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+        }
+        
+        .pricing-button {
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* VIP Cards */
+        .vip-bronze {
+            border-top: 4px solid var(--bronze);
+        }
+        
+        .vip-silver {
+            border-top: 4px solid var(--silver);
+        }
+        
+        .vip-gold {
+            border-top: 4px solid var(--gold);
+        }
+        
+        .vip-platinum {
+            border-top: 4px solid var(--platinum);
+        }
+        
+        /* Money Table */
+        .money-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            background: var(--glass);
+            backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .money-table th, .money-table td {
+            padding: 15px 20px;
+            text-align: left;
+        }
+        
+        .money-table th {
+            background: rgba(114, 137, 218, 0.2);
+            font-weight: 600;
+        }
+        
+        .money-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.03);
+        }
+        
+        .money-table tr:hover {
+            background: rgba(114, 137, 218, 0.1);
+        }
+        
+        .money-amount {
+            font-weight: 600;
+        }
+        
+        .money-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        /* How to Buy */
+        .steps {
+            counter-reset: step;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 40px;
+        }
+        
+        .step::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--darker);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transform: translateY(-50px);
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-close:hover {
+            color: var(--light);
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--dark);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--light);
+            font-family: inherit;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(114, 137, 218, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--darker);
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: var(--gray);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-bg {
+                opacity: 0.3;
+            }
+            
+            .hero-title {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .hero {
+                text-align: center;
+                padding: 150px 0 60px;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-bg {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .login-error {
+            color: #ff6b6b;
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 5px;
+            display: none;
+        }
+
+        .netlify-form {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-gamepad logo-icon"></i>
+                    <span>Porto Unico RP</span>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="#features">Recursos</a>
+                    <a href="#vip">VIP</a>
+                    <a href="#money">Dinheiro</a>
+                    <a href="#how-to-buy">Como Comprar</a>
+                </div>
+                
+                <div class="auth-buttons" id="auth-section">
+                    <button id="discord-login" class="btn btn-primary">
+                        <i class="fab fa-discord"></i>
+                        Login com Discord
+                    </button>
+                    <div id="user-profile" class="user-profile hidden">
+                        <img id="user-avatar" class="user-avatar" src="" alt="Avatar">
+                        <span id="username" class="username"></span>
+                        <button id="logout-btn" class="btn btn-outline">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Porto Unico Roleplay</h1>
+                <p class="hero-subtitle">O servidor de MTA mais imersivo de Portugal. Adquira VIP e recursos para dominar o jogo.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#vip" class="btn btn-primary">
+                        <i class="fas fa-crown"></i>
+                        Ver VIP
+                    </a>
+                    <a href="#money" class="btn btn-outline">
+                        <i class="fas fa-coins"></i>
+                        Comprar Dinheiro
+                    </a>
+                </div>
+                
+                <a href="https://discord.gg/TRxvXVRY" class="discord-link" target="_blank">
+                    <i class="fab fa-discord"></i>
+                    Entre no nosso Discord
+                </a>
+                <div id="login-error" class="login-error">
+                    Erro ao fazer login. Tente novamente.
+                </div>
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="GTA RP" class="hero-bg">
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <h2 class="section-title">Por que escolher o Porto Unico?</h2>
+            <p class="section-subtitle">Um servidor de RP completo com economia realista, sistemas avançados e comunidade ativa.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Comunidade Ativa</h3>
+                    <p>Junte-se a centenas de jogadores em um mundo persistente com eventos regulares e interações realistas.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Economia Realista</h3>
+                    <p>Sistema econômico balanceado com empregos, negócios e mercado imobiliário totalmente funcionais.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Anti-Cheat Avançado</h3>
+                    <p>Proteção contra trapaças para garantir uma experiência justa para todos os jogadores.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- VIP Section -->
+    <section class="section" id="vip">
+        <div class="container">
+            <h2 class="section-title">Planos VIP</h2>
+            <p class="section-subtitle">Obtenha vantagens exclusivas e apoie o servidor adquirindo um dos nossos pacotes VIP.</p>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card vip-bronze">
+                    <div class="pricing-badge">Popular</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">VIP Bronze</h3>
+                        <div class="pricing-price">2€</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Skin exclusiva</li>
+                        <li><i class="fas fa-check"></i> Carro exclusivo</li>
+                        <li><i class="fas fa-check"></i> Tag no Discord</li>
+                    </ul>
+                    <div class="pricing-salary">
+                        <p><strong>Salário:</strong> 50.000$ por ciclo</p>
+                    </div>
+                    <button class="btn btn-outline pricing-button" data-vip="Bronze" data-price="2€">Selecionar</button>
+                </div>
+                
+                <div class="pricing-card vip-silver">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">VIP Prata</h3>
+                        <div class="pricing-price">6€</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Skin exclusiva</li>
+                        <li><i class="fas fa-check"></i> Carro exclusivo</li>
+                        <li><i class="fas fa-check"></i> Moto exclusiva</li>
+                        <li><i class="fas fa-check"></i> Tag no Discord</li>
+                    </ul>
+                    <div class="pricing-salary">
+                        <p><strong>Salário:</strong> 120.000$ por ciclo</p>
+                    </div>
+                    <button class="btn btn-outline pricing-button" data-vip="Prata" data-price="6€">Selecionar</button>
+                </div>
+                
+                <div class="pricing-card vip-gold">
+                    <div class="pricing-badge">Melhor Custo-Benefício</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">VIP Sigma</h3>
+                        <div class="pricing-price">10€</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Skin exclusiva</li>
+                        <li><i class="fas fa-check"></i> Carro exclusivo</li>
+                        <li><i class="fas fa-check"></i> Moto exclusiva</li>
+                        <li><i class="fas fa-check"></i> Acesso a armas VIP</li>
+                        <li><i class="fas fa-check"></i> Tag no Discord</li>
+                    </ul>
+                    <div class="pricing-salary">
+                        <p><strong>Salário:</strong> 270.000$ por ciclo</p>
+                    </div>
+                    <button class="btn btn-primary pricing-button" data-vip="Sigma" data-price="10€">Selecionar</button>
+                </div>
+                
+                <div class="pricing-card vip-platinum">
+                    <div class="pricing-badge">Exclusivo</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">VIP Portuense</h3>
+                        <div class="pricing-price">15€</div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Skin exclusiva</li>
+                        <li><i class="fas fa-check"></i> Carro exclusivo</li>
+                        <li><i class="fas fa-check"></i> Moto exclusiva</li>
+                        <li><i class="fas fa-check"></i> Acesso a armas VIP</li>
+                        <li><i class="fas fa-check"></i> Mansão VIP</li>
+                        <li><i class="fas fa-check"></i> Tag especial no Discord</li>
+                    </ul>
+                    <div class="pricing-salary">
+                        <p><strong>Salário:</strong> 1.500.000$ por ciclo</p>
+                    </div>
+                    <button class="btn btn-outline pricing-button" data-vip="Portuense" data-price="15€">Selecionar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Money Section -->
+    <section class="section" id="money">
+        <div class="container">
+            <h2 class="section-title">Dinheiro no Jogo</h2>
+            <p class="section-subtitle">Adquira recursos para avançar mais rápido no servidor com nossa moeda virtual.</p>
+            
+            <table class="money-table">
+                <thead>
+                    <tr>
+                        <th>Quantia</th>
+                        <th>Preço</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="money-amount">100.000$</td>
+                        <td class="money-price">1,50€</td>
+                        <td><button class="btn btn-outline" data-money="100000" data-price="1.50">Comprar</button></td>
+                    </tr>
+                    <tr>
+                        <td class="money-amount">250.000$</td>
+                        <td class="money-price">3,00€</td>
+                        <td><button class="btn btn-outline" data-money="250000" data-price="3.00">Comprar</button></td>
+                    </tr>
+                    <tr>
+                        <td class="money-amount">500.000$</td>
+                        <td class="money-price">5,50€</td>
+                        <td><button class="btn btn-outline" data-money="500000" data-price="5.50">Comprar</button></td>
+                    </tr>
+                    <tr>
+                        <td class="money-amount">750.000$</td>
+                        <td class="money-price">7,50€</td>
+                        <td><button class="btn btn-outline" data-money="750000" data-price="7.50">Comprar</button></td>
+                    </tr>
+                    <tr>
+                        <td class="money-amount">1.000.000$</td>
+                        <td class="money-price">9,50€</td>
+                        <td><button class="btn btn-primary" data-money="1000000" data-price="9.50">Comprar</button></td>
+                    </tr>
+                    <tr>
+                        <td class="money-amount">2.000.000$</td>
+                        <td class="money-price">17,00€</td>
+                        <td><button class="btn btn-outline" data-money="2000000" data-price="17.00">Comprar</button></td>
+                    </tr>
+                    <tr>
+                        <td class="money-amount">5.000.000$</td>
+                        <td class="money-price">40,00€</td>
+                        <td><button class="btn btn-outline" data-money="5000000" data-price="40.00">Comprar</button></td>
+                    </tr>
+                    <tr>
+                        <td class="money-amount">10.000.000$</td>
+                        <td class="money-price">55,00€</td>
+                        <td><button class="btn btn-outline" data-money="10000000" data-price="55.00">Comprar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p style="text-align: center; margin-top: 30px; color: var(--gray);">
+                <i class="fas fa-shield-alt"></i> Pagamentos seguros via PayPal, MB Way e Transferência Bancária
+            </p>
+        </div>
+    </section>
+    
+    <!-- How to Buy Section -->
+    <section class="section" id="how-to-buy">
+        <div class="container">
+            <h2 class="section-title">Como Comprar</h2>
+            <p class="section-subtitle">Siga estes passos simples para adquirir VIP ou dinheiro no nosso servidor.</p>
+            
+            <div class="steps">
+                <div class="step">
+                    <h3 class="step-title">Acesse nosso Discord ou site</h3>
+                    <p>Entre no nosso servidor do Discord ou acesse o site oficial para visualizar todos os pacotes disponíveis.</p>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title">Escolha seu pacote</h3>
+                    <p>Selecione o VIP ou o valor em dinheiro que melhor se adapta às suas necessidades e orçamento.</p>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title">Abra um ticket de atendimento</h3>
+                    <p>No Discord, vá até a aba de atendimento e crie um novo ticket explicando o que deseja adquirir.</p>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title">Aguarde a resposta</h3>
+                    <p>Nossa equipe entrará em contato para confirmar seu pedido e fornecer as instruções de pagamento.</p>
+                </div>
+                
+                <div class="step">
+                    <h3 class="step-title">Receba seus benefícios</h3>
+                    <p>Após a confirmação do pagamento, seus benefícios serão adicionados diretamente na sua conta do jogo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-links">
+                    <a href="#" class="footer-logo">
+                        <i class="fas fa-gamepad"></i>
+                        Porto Unico RP
+                    </a>
+                    <p>O melhor servidor de Roleplay de MTA em Portugal.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://discord.gg/TRxvXVRY" target="_blank"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="#features">Recursos</a></li>
+                        <li><a href="#vip">Planos VIP</a></li>
+                        <li><a href="#money">Comprar Dinheiro</a></li>
+                        <li><a href="#how-to-buy">Como Comprar</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h3>Suporte</h3>
+                    <ul>
+                        <li><a href="https://discord.gg/TRxvXVRY" target="_blank">Discord</a></li>
+                        <li><a href="#">Termos de Serviço</a></li>
+                        <li><a href="#">Política de Privacidade</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Porto Unico RP. Todos os direitos reservados.</p>
+                <p>Não afiliado à Rockstar Games ou Multi Theft Auto.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Purchase Modal -->
+    <div class="modal" id="purchase-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h2 class="modal-title" id="modal-title">Comprar VIP</h2>
+            
+            <form id="purchase-form">
+                <input type="hidden" id="product-type">
+                <input type="hidden" id="product-name">
+                <input type="hidden" id="product-price">
+                
+                <div class="form-group">
+                    <label for="user-id">Seu ID no Servidor</label>
+                    <input type="text" id="user-id" class="form-control" required placeholder="Ex: 12345">
+                </div>
+                
+                <div class="form-group">
+                    <label for="payment-method">Método de Pagamento</label>
+                    <select id="payment-method" class="form-control" required>
+                        <option value="">Selecione...</option>
+                        <option value="PayPal">PayPal</option>
+                        <option value="MB Way">MB Way</option>
+                        <option value="Transferência Bancária">Transferência Bancária</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="user-notes">Observações (opcional)</label>
+                    <textarea id="user-notes" class="form-control" rows="3" placeholder="Alguma informação adicional..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-success" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> Enviar Pedido
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Formulário Netlify (Oculto) -->
+    <form class="netlify-form" name="vip-purchase" netlify netlify-honeypot="bot-field">
+        <input type="hidden" name="product-type" id="nf-product-type">
+        <input type="hidden" name="product-name" id="nf-product-name">
+        <input type="hidden" name="product-price" id="nf-product-price">
+        <input type="hidden" name="user-id" id="nf-user-id">
+        <input type="hidden" name="payment-method" id="nf-payment-method">
+        <textarea name="user-notes" id="nf-user-notes" style="display:none;"></textarea>
+        <input type="hidden" name="discord-user" id="nf-discord-user">
+        <input type="text" name="bot-field" style="display:none;">
+    </form>
+
+    <script>
+        // Configuração do Discord OAuth
+        const DISCORD_CLIENT_ID = '1388158298305597483';
+        const DISCORD_REDIRECT_URI = encodeURIComponent(window.location.origin);
+        const DISCORD_SCOPE = encodeURIComponent('identify email');
+        const DISCORD_AUTH_URL = `https://discord.com/oauth2/authorize?client_id=1388158298305597483&response_type=code&redirect_uri=https%3A%2F%2Fcharming-grasshopper.static.domains%2F%3Fcode%3DTNGrPXGJdnofd2S6GzUzS8mYKWJd36%23features&scope=identify+email`;
+
+        // Elementos da UI
+        const discordLoginBtn = document.getElementById('discord-login');
+        const userProfile = document.getElementById('user-profile');
+        const userAvatar = document.getElementById('user-avatar');
+        const username = document.getElementById('username');
+        const logoutBtn = document.getElementById('logout-btn');
+        const purchaseForm = document.getElementById('purchase-form');
+        const loginError = document.getElementById('login-error');
+        const modalClose = document.getElementById('modal-close');
+        const purchaseModal = document.getElementById('purchase-modal');
+        const productType = document.getElementById('product-type');
+        const productName = document.getElementById('product-name');
+        const productPrice = document.getElementById('product-price');
+
+        // Estado do usuário
+        let currentUser = null;
+
+        // Função para enviar formulário Netlify
+        function submitNetlifyForm(orderData) {
+            document.getElementById('nf-product-type').value = orderData.type;
+            document.getElementById('nf-product-name').value = orderData.productName;
+            document.getElementById('nf-product-price').value = orderData.productPrice;
+            document.getElementById('nf-user-id').value = orderData.userId;
+            document.getElementById('nf-payment-method').value = orderData.paymentMethod;
+            document.getElementById('nf-user-notes').value = orderData.notes || '';
+            document.getElementById('nf-discord-user').value = JSON.stringify(orderData.discordUser || {});
+            
+            document.querySelector('.netlify-form').submit();
+        }
+
+        // Função para redirecionar para o OAuth do Discord
+        function loginWithDiscord() {
+            window.location.href = DISCORD_AUTH_URL;
+        }
+
+        // Função para fazer logout
+        function logout() {
+            localStorage.removeItem('discord_user');
+            currentUser = null;
+            updateUI();
+            window.location.hash = '';
+        }
+
+        // Função para verificar autenticação
+        function checkAuth() {
+            // Verificar hash da URL primeiro (retorno do Discord)
+            const hash = window.location.hash.substring(1);
+            const params = new URLSearchParams(hash);
+            const accessToken = params.get('access_token');
+
+            if (accessToken) {
+                getUserData(accessToken);
+                window.history.pushState({}, document.title, window.location.pathname);
+            } else {
+                // Verificar localStorage
+                const savedUser = localStorage.getItem('discord_user');
+                if (savedUser) {
+                    currentUser = JSON.parse(savedUser);
+                    updateUI();
+                }
+            }
+        }
+
+        // Função para obter dados do usuário
+        async function getUserData(accessToken) {
+            try {
+                const response = await fetch('https://discord.com/api/users/@me', {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch user data');
+
+                const userData = await response.json();
+                
+                currentUser = {
+                    id: userData.id,
+                    username: userData.username,
+                    discriminator: userData.discriminator,
+                    avatar: userData.avatar,
+                    email: userData.email
+                };
+
+                localStorage.setItem('discord_user', JSON.stringify(currentUser));
+                updateUI();
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+                showError();
+            }
+        }
+
+        // Função para atualizar a UI
+        function updateUI() {
+            if (currentUser) {
+                discordLoginBtn.classList.add('hidden');
+                userProfile.classList.remove('hidden');
+                
+                const avatarUrl = currentUser.avatar 
+                    ? `https://cdn.discordapp.com/avatars/${currentUser.id}/${currentUser.avatar}.png`
+                    : `https://cdn.discordapp.com/embed/avatars/${currentUser.discriminator % 5}.png`;
+                
+                userAvatar.src = avatarUrl;
+                username.textContent = `${currentUser.username}#${currentUser.discriminator}`;
+            } else {
+                discordLoginBtn.classList.remove('hidden');
+                userProfile.classList.add('hidden');
+            }
+        }
+
+        // Função para mostrar erro
+        function showError() {
+            loginError.style.display = 'block';
+            setTimeout(() => {
+                loginError.style.display = 'none';
+            }, 5000);
+        }
+
+        // Event Listeners
+        discordLoginBtn.addEventListener('click', loginWithDiscord);
+        if (logoutBtn) logoutBtn.addEventListener('click', logout);
+
+        // Fechar modal ao clicar no botão de fechar
+        modalClose.addEventListener('click', () => {
+            purchaseModal.classList.remove('active');
+        });
+
+        // Fechar modal ao clicar fora do conteúdo
+        purchaseModal.addEventListener('click', (e) => {
+            if (e.target === purchaseModal) {
+                purchaseModal.classList.remove('active');
+            }
+        });
+
+        // Enviar formulário de compra
+        purchaseForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                alert('Por favor, faça login com o Discord primeiro.');
+                loginWithDiscord();
+                return;
+            }
+            
+            const orderData = {
+                type: productType.value,
+                productName: productName.value,
+                productPrice: productPrice.value,
+                userId: document.getElementById('user-id').value,
+                paymentMethod: document.getElementById('payment-method').value,
+                notes: document.getElementById('user-notes').value,
+                discordUser: currentUser
+            };
+            
+            // Enviar para Netlify Forms
+            submitNetlifyForm(orderData);
+            
+            // Feedback visual
+            alert('Pedido enviado! Entraremos em contato via Discord.');
+            purchaseModal.classList.remove('active');
+            purchaseForm.reset();
+        });
+
+        // Configurar botões de compra
+        document.querySelectorAll('.pricing-button').forEach(button => {
+            button.addEventListener('click', () => {
+                openPurchaseModal(
+                    'vip',
+                    button.dataset.vip,
+                    button.dataset.price
+                );
+            });
+        });
+
+        document.querySelectorAll('.money-table button').forEach(button => {
+            button.addEventListener('click', () => {
+                openPurchaseModal(
+                    'money',
+                    `${parseInt(button.dataset.money).toLocaleString()} $`,
+                    `${button.dataset.price}€`
+                );
+            });
+        });
+
+        // Função para abrir modal de compra
+        function openPurchaseModal(type, name, price) {
+            productType.value = type;
+            productName.value = name;
+            productPrice.value = price;
+            
+            modalTitle.textContent = `Comprar ${type === 'vip' ? 'VIP ' : ''}${name}`;
+            purchaseModal.classList.add('active');
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
